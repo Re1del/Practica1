@@ -1,66 +1,36 @@
+import os
 import re
 import sys
 
 from mrjob.job import MRJob
 
 
-class MRApartado2_3(MRJob):
+class MRApartado3(MRJob):
     def mapper(self, key, line):
-        linesplit = line.split(',')
-        p = re.compile('(\d{4}\/\d{2})')
-        m = p.match(linesplit[0])
-        if m:
-            my = m.group()
-            # print my + ',' + linesplit[8]
-            yield my, linesplit[8]
+        filename = os.environ['mapreduce_map_input_file']
+        wordList = re.sub("[^\w]", " ", line).split()
+        for word in wordList:
+            yield (word.lower(), filename), 1
 
-    def combiner(self, key, value):
-        len = 0
-        min = 0
-        total = 0
-        max = 0
-        for i in value:
-            curr_num = float(i)
-
-            if len == 0:
-                min = curr_num
-            else:
-                if curr_num <= min:
-                    min = curr_num
-
-            total = total + curr_num
-
-            if curr_num >= max:
-                max = curr_num
-
-            len = len + 1
-        yield key, (max, min, total, len)
+    def combiner(self, key, values):
+        yield key[0], (key[1], sum(values))
 
     def reducer(self, key, value):
-        len = 0
-        min = 0
-        total = 0
-        max = 0
-        for i in value:
-            if len == 0:
-                max = i[0]
-                min = i[1]
-                total = i[2]
-                len = i[3]
+        counts = dict()
+        filter = False
+        for k,v in value:
+            if counts.has_key(k):
+                counts[k] = counts[k] + v
+                if counts[k] >= 20:
+                    filter = True
             else:
-                if i[0] >= max:
-                    max = i[0]
-                if i[1] <= min:
-                    min = i[0]
-                total = total + i[2]
-                len = len + i[3]
-        avg = total / len
-        yield key, (max, avg, min)
+                counts[k] = v
+                if v >= 20:
+                    filter = True
+        if filter:
+            yield key, counts
 
 
 if __name__ == '__main__':
     print sys.argv
-    if len(sys.argv) != 3:
-        print "Faltan los ficheros!"
-        exit(-1)
-    MRApartado2_3.run()
+    MRApartado3.run()
