@@ -12,6 +12,7 @@ con nadie. Declaramos además que no hemos realizado de manera deshonesta ningun
 que pueda mejorar nuestros resultados ni perjudicar los resultados de los demás.
 '''
 
+
 def extract(x):
     y = pat.search(x)
     ip = y.group(1)

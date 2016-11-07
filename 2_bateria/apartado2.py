@@ -57,4 +57,6 @@ rdd_core = (
 )
 
 rdd_max = rdd_core.collect()
-print rdd_max
+
+for val in rdd_max:
+    print val

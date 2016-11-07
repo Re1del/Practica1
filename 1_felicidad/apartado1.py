@@ -11,6 +11,7 @@ con nadie. Declaramos además que no hemos realizado de manera deshonesta ningun
 que pueda mejorar nuestros resultados ni perjudicar los resultados de los demás.
 '''
 
+
 class MRWordCount(MRJob):
     # Fase MAP (line es una cadena de texto)
     def mapper(self, key, line):

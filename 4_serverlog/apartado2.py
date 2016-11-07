@@ -12,6 +12,7 @@ con nadie. Declaramos además que no hemos realizado de manera deshonesta ningun
 que pueda mejorar nuestros resultados ni perjudicar los resultados de los demás.
 '''
 
+
 class MRApartado2_3(MRJob):
     def mapper(self, key, line):
         pat = re.compile('(.*?)\s-\s-[\w\W]+?\s(\d+)\s(\d+|-)')
@@ -40,7 +41,7 @@ class MRApartado2_3(MRJob):
             numpet = numpet + item[0]
             numerr = numerr + item[1]
             data = data + item[2]
-        yield key, (numpet,numerr,data)
+        yield key, (numpet, numerr, data)
 
     def reducer(self, key, value):
         numpet = 0

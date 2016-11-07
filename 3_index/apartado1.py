@@ -1,9 +1,9 @@
+# coding=utf-8
 import os
 import re
 import sys
 from collections import Counter
 
-# coding=utf-8
 from mrjob.job import MRJob
 
 '''
@@ -13,6 +13,7 @@ ni hemos obtenido la solución de fuentes externas, y tampoco hemos compartido n
 con nadie. Declaramos además que no hemos realizado de manera deshonesta ninguna otra actividad
 que pueda mejorar nuestros resultados ni perjudicar los resultados de los demás.
 '''
+
 
 class MRApartado3(MRJob):
     def mapper(self, key, line):

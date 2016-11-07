@@ -26,4 +26,6 @@ counts = (
 )
 
 output = counts.take(5)
-print '\n\n', output, '\n\n'
+
+for val in output:
+    print val

@@ -13,6 +13,7 @@ con nadie. Declaramos además que no hemos realizado de manera deshonesta ningun
 que pueda mejorar nuestros resultados ni perjudicar los resultados de los demás.
 '''
 
+
 class MRApartado3(MRJob):
     def mapper(self, key, line):
         filename = os.environ['mapreduce_map_input_file']
@@ -26,7 +27,7 @@ class MRApartado3(MRJob):
     def reducer(self, key, value):
         counts = dict()
         filter = False
-        for k,v in value:
+        for k, v in value:
             if counts.has_key(k):
                 counts[k] = counts[k] + v
                 if counts[k] >= 20:
