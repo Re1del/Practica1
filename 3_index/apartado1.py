@@ -3,6 +3,7 @@ import re
 import sys
 from collections import Counter
 
+# coding=utf-8
 from mrjob.job import MRJob
 
 '''

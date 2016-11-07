@@ -1,3 +1,4 @@
+# coding=utf-8
 import heapq
 
 from mrjob.job import MRJob

@@ -1,3 +1,4 @@
+# coding=utf-8
 import re
 import sys
 
@@ -10,7 +11,6 @@ ni hemos obtenido la solución de fuentes externas, y tampoco hemos compartido n
 con nadie. Declaramos además que no hemos realizado de manera deshonesta ninguna otra actividad
 que pueda mejorar nuestros resultados ni perjudicar los resultados de los demás.
 '''
-
 
 class MRApartado2_3(MRJob):
     def mapper(self, key, line):
@@ -40,7 +40,7 @@ class MRApartado2_3(MRJob):
             numpet = numpet + item[0]
             numerr = numerr + item[1]
             data = data + item[2]
-        yield key, (numpet, numerr, data)
+        yield key, (numpet,numerr,data)
 
     def reducer(self, key, value):
         numpet = 0
