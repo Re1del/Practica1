@@ -2,6 +2,13 @@ import heapq
 
 from mrjob.job import MRJob
 
+'''
+Viktor Jacynycz García y Miguel del Andrés Herrero declaramos que esta solución es fruto
+exclusivamente de nuestro trabajo personal. No hemos sido ayudados por ninguna otra persona
+ni hemos obtenido la solución de fuentes externas, y tampoco hemos compartido nuestra solución
+con nadie. Declaramos además que no hemos realizado de manera deshonesta ninguna otra actividad
+que pueda mejorar nuestros resultados ni perjudicar los resultados de los demás.
+'''
 
 class MRWordCount(MRJob):
     # Fase MAP (line es una cadena de texto)
