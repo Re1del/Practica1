@@ -21,7 +21,8 @@ class MRApartado2_3(MRJob):
         if m:
             my = m.group()
             # print my + ',' + linesplit[8]
-            yield my, linesplit[8]
+            bat = float(linesplit[8])
+            yield my, (bat,bat,bat,1)
 
     def combiner(self, key, value):
         len = 0
@@ -29,20 +30,18 @@ class MRApartado2_3(MRJob):
         total = 0
         max = 0
         for i in value:
-            curr_num = float(i)
-
             if len == 0:
-                min = curr_num
+                max = i[0]
+                min = i[1]
+                total = i[2]
+                len = i[3]
             else:
-                if curr_num <= min:
-                    min = curr_num
-
-            total = total + curr_num
-
-            if curr_num >= max:
-                max = curr_num
-
-            len = len + 1
+                if i[0] >= max:
+                    max = i[0]
+                if i[1] <= min:
+                    min = i[0]
+                total = total + i[2]
+                len = len + i[3]
         yield key, (max, min, total, len)
 
     def reducer(self, key, value):

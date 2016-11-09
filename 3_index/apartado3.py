@@ -18,24 +18,34 @@ class MRApartado3(MRJob):
     def mapper(self, key, line):
         filename = os.environ['mapreduce_map_input_file']
         wordList = re.sub("[^\w]", " ", line).split()
+        counts = dict()
         for word in wordList:
-            yield (word.lower(), filename), 1
+            counts[filename] = 1
+            yield word.lower(), counts
 
     def combiner(self, key, values):
-        yield key[0], (key[1], sum(values))
+        counts = dict()
+        for dictionaries in values:
+            for item in dictionaries.items():
+                if counts.has_key(item[0]):
+                    counts[item[0]] = counts[item[0]] + item[1]
+                else:
+                    counts[item[0]] = item[1]
+        yield key, counts
 
-    def reducer(self, key, value):
+    def reducer(self, key, values):
         counts = dict()
         filter = False
-        for k, v in value:
-            if counts.has_key(k):
-                counts[k] = counts[k] + v
-                if counts[k] >= 20:
-                    filter = True
-            else:
-                counts[k] = v
-                if v >= 20:
-                    filter = True
+        for dictionaries in values:
+            for item in dictionaries.items():
+                if counts.has_key(item[0]):
+                    counts[item[0]] = counts[item[0]] + item[1]
+                    if counts[item[0]] >= 20:
+                        filter = True
+                else:
+                    counts[item[0]] = item[1]
+                    if item[1] >= 20:
+                        filter = True
         if filter:
             yield key, counts
 
